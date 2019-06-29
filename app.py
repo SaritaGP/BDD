@@ -43,7 +43,7 @@ def get_usermessages(uid):
     return json.jsonify(messages)
 
 @app.route("/received/<int:uid>")
-def get_usermessages(uid):
+def get_received(uid):
     messages = list(mensajes.find({"receptant": uid}, {"_id": 0, "message": 1, "sender": 1}))
     return json.jsonify(messages)
 
@@ -63,7 +63,7 @@ def get_conversation(uid1, uid2):
 
 #################### RUTAS TEXT SEARCH ENUNCIADO ###############################
 
-# /messages/?siosi=frase1,frase2&pueden=palabra1,palabra2&no=palabra1,palabra2
+# /messages?siosi=frase1,frase2&pueden=palabra1,palabra2&no=palabra1,palabra2
 def get_search():
     si_o_si = request.args.get('siosi')
     pueden = request.args.get('pueden')
