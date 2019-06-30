@@ -44,7 +44,7 @@ def get_usermessages(uid):
     if final_search == "": mensajes_iden = list(mensajes.find({"sender": uid}, {"_id": 0}))
     else: mensajes_iden = list(mensajes.find({ '$text': { '$search': final_search }, "sender": uid }, { "_id": 0 } ))
 
-    return json.jsonify(messages)
+    return json.jsonify(mensajes_iden)
 
 @app.route("/received/<int:uid>")
 def get_received(uid):
