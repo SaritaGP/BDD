@@ -39,7 +39,11 @@ def get_message(mid):
 # Enunciado: ii
 @app.route("/usermessages/<int:uid>")
 def get_usermessages(uid):
-    messages = list(mensajes.find({"sender": uid}, {"_id": 0}))
+    final_search = get_search()
+    # print(final_search)
+    if final_search == "": mensajes_iden = list(mensajes.find({"sender": uid}, {"_id": 0}))
+    else: mensajes_iden = list(mensajes.find({ '$text': { '$search': final_search }, "sender": uid }, { "_id": 0 } ))
+
     return json.jsonify(messages)
 
 @app.route("/received/<int:uid>")
@@ -63,7 +67,8 @@ def get_conversation(uid1, uid2):
 
 #################### RUTAS TEXT SEARCH ENUNCIADO ###############################
 
-# /messages/?siosi=frase1,frase2&pueden=palabra1,palabra2&no=palabra1,palabra2
+# /messages?siosi=frase1,frase2&pueden=palabra1,palabra2&no=palabra1,palabra2
+# /usermessages
 def get_search():
     si_o_si = request.args.get('siosi')
     pueden = request.args.get('pueden')
