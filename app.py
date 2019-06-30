@@ -47,7 +47,7 @@ def get_usermessages(uid):
     return json.jsonify(messages)
 
 @app.route("/received/<int:uid>")
-def get_usermessages(uid):
+def get_received(uid):
     messages = list(mensajes.find({"receptant": uid}, {"_id": 0, "message": 1, "sender": 1}))
     return json.jsonify(messages)
 
